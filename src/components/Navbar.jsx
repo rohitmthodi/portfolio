@@ -19,11 +19,7 @@ const Navbar = () => {
           transition={{ duration: 0.7 }}
           className="flex items-center"
         >
-          <img
-            src={logo}
-            alt="Rohit Logo"
-            className="h-15 w-15"
-          />
+          <img src={logo} alt="Rohit Logo" className="h-15 w-15" />
         </motion.div>
 
         {/* Desktop Nav */}
@@ -48,15 +44,20 @@ const Navbar = () => {
         </motion.nav>
 
         {/* Mobile Hamburger */}
-        <motion.button
-          initial={{ x: 20, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.7 }}
-          onClick={() => setMenuOpen(true)}
-          className="md:hidden flex items-center justify-center text-white text-3xl rounded-xl"
-        >
-          <HiOutlineMenuAlt3 />
-        </motion.button>
+        <AnimatePresence>
+          {!menuOpen && (
+            <motion.button
+              initial={{ x: 20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: 20, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setMenuOpen(true)}
+              className="md:hidden flex items-center justify-center text-white text-3xl rounded-xl"
+            >
+              <HiOutlineMenuAlt3 />
+            </motion.button>
+          )}
+        </AnimatePresence>
       </header>
 
       {/* Mobile Drawer */}
