@@ -10,33 +10,33 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex w-full max-w-7xl justify-between px-4">
-        {/* Logo */}
+      <header className="fixed top-0.5 md:top-2 left-1/2 -translate-x-1/2 z-50 flex w-full max-w-7xl justify-between px-4 md:px-4 py-2 md:py-0 bg-black/20 backdrop-blur-xs shadow-[0_20px_80px_rgba(0,0,0,0.45)] rounded-xl md:bg-transparent md:backdrop-blur-none md:shadow-none">
+        {/* LOCATION */}
         <motion.div
-          initial={{ x: -80, opacity: 0 }}
+          initial={{ x: -20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.7 }}
-          className="flex justify-center items-center px-3 py-2 text-4xl text-white rounded-xl border border-white/10 bg-white/10 backdrop-blur-[30px] shadow-[0_10px_60px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.08)]"
+          className="flex justify-center items-center px-3 py-2 text-4xl text-white rounded-xl md:bg-black/20 md:backdrop-blur-xs md:shadow-[0_20px_80px_rgba(0,0,0,0.45)]"
         >
-          <SiDailydotdev />
+          <p className="text-xs font-medium uppercase tracking-[4px] text-gray-400">
+            ROHIT
+          </p>
         </motion.div>
 
         {/* Desktop Nav */}
         <motion.nav
-          initial={{ y: -60, opacity: 0 }}
+          initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.7, delay: 0.15 }}
-          className="hidden md:flex items-center gap-2 px-3 py-2"
+          className="hidden md:flex items-center gap-2 px-3 py-2 bg-white/5 backdrop-blur-xs shadow-[0_20px_80px_rgba(0,0,0,0.45)] rounded-lg"
         >
-          {navLinks.slice(0, 4).map((link) => (
+          {navLinks.map((link) => (
             <a
               key={link.id}
               href={link.path}
               onClick={() => setActive(link.id)}
-              className={`relative px-5 py-2 rounded-lg text-sm font-medium tracking-wide transition-all duration-300 ease-out hover:scale-110 hover:text-white outline-none ${
-                active === link.id
-                  ? "scale-110 text-white bg-white/10"
-                  : "text-white/40"
+              className={`relative px-3 py-1 rounded-lg text-xs font-medium tracking-wide transition-all duration-300 ease-out hover:scale-110 hover:text-white outline-none ${
+                active === link.id ? "scale-110 text-white" : "text-white/40"
               }`}
             >
               {link.title}
@@ -44,21 +44,9 @@ const Navbar = () => {
           ))}
         </motion.nav>
 
-        {/* Desktop Contact */}
-        <motion.div
-          initial={{ x: 80, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="hidden md:flex items-center"
-        >
-          <button className="relative px-5 py-2 rounded-lg text-sm font-medium tracking-wide transition-all duration-300 ease-out hover:scale-110 hover:text-white outline-none text-white/40 hover:bg-white/10">
-            Contact
-          </button>
-        </motion.div>
-
         {/* Mobile Hamburger */}
         <motion.button
-          initial={{ x: 80, opacity: 0 }}
+          initial={{ x: 20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.7 }}
           onClick={() => setMenuOpen(true)}
@@ -96,7 +84,7 @@ const Navbar = () => {
                 </button>
               </div>
 
-              <div className="flex flex-col px-6 mt-5 space-y-3">
+              <div className="flex flex-col px-6 mt-3 space-y-2">
                 {navLinks.map((link) => (
                   <a
                     key={link.id}
@@ -105,7 +93,7 @@ const Navbar = () => {
                       setActive(link.id);
                       setMenuOpen(false);
                     }}
-                    className={`px-5 py-3 rounded-lg text-base font-medium transition-all duration-300 ${
+                    className={`px-5 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
                       active === link.id
                         ? "bg-white/10 text-white"
                         : "text-white/60 hover:bg-white/10 hover:text-white"
@@ -114,12 +102,6 @@ const Navbar = () => {
                     {link.title}
                   </a>
                 ))}
-
-                <div className="mx-5 my-2 border-t border-white/10" />
-
-                <button className="mt-2 px-5 py-3 rounded-lg text-base font-medium text-white/60 hover:text-white hover:bg-white/10 transition-all duration-300 text-left">
-                  Contact
-                </button>
               </div>
             </motion.div>
           </>
