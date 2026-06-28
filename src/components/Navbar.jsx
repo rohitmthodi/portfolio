@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import logo from "../assets/logo.png";
 import { SiDailydotdev } from "react-icons/si";
 import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
@@ -11,16 +12,18 @@ const Navbar = () => {
   return (
     <>
       <header className="fixed top-0.5 md:top-2 left-1/2 -translate-x-1/2 z-50 flex w-full max-w-7xl justify-between px-4 md:px-4 py-2 md:py-0 bg-black/20 backdrop-blur-xs shadow-[0_20px_80px_rgba(0,0,0,0.45)] rounded-xl md:bg-transparent md:backdrop-blur-none md:shadow-none">
-        {/* LOCATION */}
+        {/* LOGO */}
         <motion.div
           initial={{ x: -20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.7 }}
-          className="flex justify-center items-center px-3 py-2 text-4xl text-white rounded-xl md:bg-black/20 md:backdrop-blur-xs md:shadow-[0_20px_80px_rgba(0,0,0,0.45)]"
+          className="flex items-center"
         >
-          <p className="text-xs font-medium uppercase tracking-[4px] text-gray-400">
-            ROHIT
-          </p>
+          <img
+            src={logo}
+            alt="Rohit Logo"
+            className="h-15 w-15"
+          />
         </motion.div>
 
         {/* Desktop Nav */}
@@ -28,7 +31,7 @@ const Navbar = () => {
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.7, delay: 0.15 }}
-          className="hidden md:flex items-center gap-2 px-3 py-2 bg-white/5 backdrop-blur-xs shadow-[0_20px_80px_rgba(0,0,0,0.45)] rounded-lg"
+          className="hidden md:flex items-center gap-2 py-2"
         >
           {navLinks.map((link) => (
             <a
@@ -65,7 +68,7 @@ const Navbar = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-40 bg-black outline-none"
+              className="fixed inset-0 z-40 outline-none"
             />
 
             <motion.div
@@ -73,9 +76,9 @@ const Navbar = () => {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ duration: 0.35 }}
-              className="fixed top-0 right-0 h-screen w-72 z-50 border-l border-white/10 bg-white/10 backdrop-blur-[30px] shadow-[-10px_0_60px_rgba(0,0,0,0.4)]"
+              className="fixed top-0 right-0 h-screen w-full z-50 border-l border-white/10  backdrop-blur-[3px] shadow-[-10px_0_60px_rgba(0,0,0,0.4)]"
             >
-              <div className="flex justify-end p-5">
+              <div className="flex justify-end px-4 py-6">
                 <button
                   onClick={() => setMenuOpen(false)}
                   className="text-white text-3xl"

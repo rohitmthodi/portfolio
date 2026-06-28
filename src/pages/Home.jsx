@@ -21,7 +21,6 @@ const Home = () => {
       <div className="relative z-10">
         <Navbar />
         <Header />
-        <Footer />
       </div>
     </div>
   );

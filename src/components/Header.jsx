@@ -21,14 +21,14 @@ const Header = () => {
         </p>
 
         {/* Name */}
-        <div className="absolute mt-140 z-50">
-          <h1 className="text-center text-3xl md:text-8xl font-semibold tracking-[20px]">
-            <span className="font-title uppercase text-cyan-200">
+        <div className="absolute text-center mt-100 sm:mt-120 md:mt-140 z-50">
+          <h1 className="text-center text-5xl sm:text-7xl md:text-7xl font-semibold tracking-[8px] md:tracking-[20px]">
+            <span className="uppercase font-title text-cyan-200">
               I'm ROHIT
             </span>
           </h1>
 
-          <p className="mt-2 text-center text-gray-400 text-2xl uppercase font-medium">
+          <p className="mt-2 text-center text-gray-400 text-2xl uppercase font-medium md:tracking-[3px]">
             Web Developer & UI/UX Designer
           </p>
         </div>
