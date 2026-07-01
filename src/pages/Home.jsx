@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#050505] text-white">
       <div className="absolute inset-0">
-        <div className="absolute left-0 bottom-0 h-100 w-100 rounded-full bg-cyan-500/10 blur-[100px]" />
+        <div className="absolute left-0 bottom-0 h-100 w-100 rounded-full bg-yellow-500/10 blur-[100px] sm:animate-pulse" />
 
         {/* Grid */}
         <div

@@ -4,8 +4,6 @@ import rohit from "../assets/rohit.png";
 const Header = () => {
   return (
     <section className="relative min-h-screen overflow-hidden text-white pt-">
- 
-
       <div className="relative z-20 flex min-h-screen flex-col items-center justify-center px-6">
         {/* Image */}
         <div className="relative">
