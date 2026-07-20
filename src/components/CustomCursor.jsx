@@ -14,14 +14,13 @@ const CustomCursor = () => {
 
   // DETECT DESKTOP/MOBILE
   useEffect(() => {
-    const resize = () => {
-      setIsDesktop(window.innerWidth >= 768);
+    const media = window.matchMedia("(min-width: 768px)");
+    const listener = (e) => {
+      setIsDesktop(e.matches);
     };
-
-    window.addEventListener("resize", resize);
-
+    media.addEventListener("change", listener);
     return () => {
-      window.removeEventListener("resize", resize);
+      media.removeEventListener("change", listener);
     };
   }, []);
 
@@ -37,35 +36,33 @@ const CustomCursor = () => {
     const handleMouseDown = () => setClick(true);
     const handleMouseUp = () => setClick(false);
 
+    const handleMouseOver = (e) => {
+      if (e.target && e.target.closest("a, button, input, textarea, [data-cursor]")) {
+        setHover(true);
+      }
+    };
+
+    const handleMouseOut = (e) => {
+      if (e.target && e.target.closest("a, button, input, textarea, [data-cursor]")) {
+        const relatedTarget = e.relatedTarget;
+        if (!relatedTarget || !relatedTarget.closest("a, button, input, textarea, [data-cursor]")) {
+          setHover(false);
+        }
+      }
+    };
+
     window.addEventListener("mousemove", moveCursor);
     window.addEventListener("mousedown", handleMouseDown);
     window.addEventListener("mouseup", handleMouseUp);
-
-    const interactiveElements = document.querySelectorAll(
-      "a, button, input, textarea, [data-cursor]",
-    );
-
-    const listeners = [];
-
-    interactiveElements.forEach((el) => {
-      const enter = () => setHover(true);
-      const leave = () => setHover(false);
-
-      el.addEventListener("mouseenter", enter);
-      el.addEventListener("mouseleave", leave);
-
-      listeners.push({ el, enter, leave });
-    });
+    document.addEventListener("mouseover", handleMouseOver);
+    document.addEventListener("mouseout", handleMouseOut);
 
     return () => {
       window.removeEventListener("mousemove", moveCursor);
       window.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mouseup", handleMouseUp);
-
-      listeners.forEach(({ el, enter, leave }) => {
-        el.removeEventListener("mouseenter", enter);
-        el.removeEventListener("mouseleave", leave);
-      });
+      document.removeEventListener("mouseover", handleMouseOver);
+      document.removeEventListener("mouseout", handleMouseOut);
     };
   }, []);
 

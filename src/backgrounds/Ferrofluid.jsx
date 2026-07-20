@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Renderer, Program, Mesh, Triangle } from "ogl";
 
 const MAX_COLORS = 8;
@@ -219,6 +219,24 @@ const Ferrofluid = ({
   const mouseTargetRef = useRef([0, 0]);
   const lastTimeRef = useRef(0);
 
+  // Keep references to all configuration props for the frame loop
+  const pausedRef = useRef(paused);
+  const mouseDampeningRef = useRef(mouseDampening);
+  const mouseInteractionRef = useRef(mouseInteraction);
+
+  useEffect(() => {
+    pausedRef.current = paused;
+  }, [paused]);
+
+  useEffect(() => {
+    mouseDampeningRef.current = mouseDampening;
+  }, [mouseDampening]);
+
+  useEffect(() => {
+    mouseInteractionRef.current = mouseInteraction;
+  }, [mouseInteraction]);
+
+  // Setup WebGL Context and Renderer
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -239,6 +257,7 @@ const Ferrofluid = ({
     canvas.style.display = "block";
     container.appendChild(canvas);
 
+    // Initial setup with initial properties
     const { arr, count, avg } = prepColors(colors);
 
     const uniforms = {
@@ -295,27 +314,27 @@ const Ferrofluid = ({
     ro.observe(container);
 
     const onPointerMove = (e) => {
+      if (!mouseInteractionRef.current) return;
       const rect = canvas.getBoundingClientRect();
       const sc = renderer.dpr || 1;
       const x = (e.clientX - rect.left) * sc;
       const y = (rect.height - (e.clientY - rect.top)) * sc;
       mouseTargetRef.current = [x, y];
-      if (mouseDampening <= 0) {
+      if (mouseDampeningRef.current <= 0) {
         uniforms.iMouse.value = [x, y];
       }
     };
-    if (mouseInteraction) {
-      canvas.addEventListener("pointermove", onPointerMove);
-    }
+    canvas.addEventListener("pointermove", onPointerMove);
 
     const loop = (t) => {
       rafRef.current = requestAnimationFrame(loop);
       uniforms.iTime.value = t * 0.001;
-      if (mouseDampening > 0) {
+      const damp = mouseDampeningRef.current;
+      if (damp > 0) {
         if (!lastTimeRef.current) lastTimeRef.current = t;
         const dt = (t - lastTimeRef.current) / 1000;
         lastTimeRef.current = t;
-        const tau = Math.max(1e-4, mouseDampening);
+        const tau = Math.max(1e-4, damp);
         let factor = 1 - Math.exp(-dt / tau);
         if (factor > 1) factor = 1;
         const target = mouseTargetRef.current;
@@ -325,7 +344,7 @@ const Ferrofluid = ({
       } else {
         lastTimeRef.current = t;
       }
-      if (!paused && programRef.current && meshRef.current) {
+      if (!pausedRef.current && programRef.current && meshRef.current) {
         try {
           renderer.render({ scene: meshRef.current });
         } catch (e) {
@@ -337,8 +356,7 @@ const Ferrofluid = ({
 
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      if (mouseInteraction)
-        canvas.removeEventListener("pointermove", onPointerMove);
+      canvas.removeEventListener("pointermove", onPointerMove);
       ro.disconnect();
       if (canvas.parentElement === container) {
         container.removeChild(canvas);
@@ -358,10 +376,43 @@ const Ferrofluid = ({
       meshRef.current = null;
       rendererRef.current = null;
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dpr]);
+
+  const colorsKey = colors.join(",");
+
+  // Target effect to update uniforms when configuration props change
+  useEffect(() => {
+    if (!programRef.current) return;
+    const uniforms = programRef.current.uniforms;
+
+    const { arr, count, avg } = prepColors(colors);
+    uniforms.uColor0.value = arr[0];
+    uniforms.uColor1.value = arr[1];
+    uniforms.uColor2.value = arr[2];
+    uniforms.uColor3.value = arr[3];
+    uniforms.uColor4.value = arr[4];
+    uniforms.uColor5.value = arr[5];
+    uniforms.uColor6.value = arr[6];
+    uniforms.uColor7.value = arr[7];
+    uniforms.uColorCount.value = count;
+    uniforms.uMouseColor.value = avg;
+    uniforms.uFlow.value = flowVec(flowDirection);
+    uniforms.uSpeed.value = speed;
+    uniforms.uScale.value = scale;
+    uniforms.uTurbulence.value = turbulence;
+    uniforms.uFluidity.value = fluidity;
+    uniforms.uRimWidth.value = rimWidth;
+    uniforms.uSharpness.value = sharpness;
+    uniforms.uShimmer.value = shimmer;
+    uniforms.uGlow.value = glow;
+    uniforms.uOpacity.value = opacity;
+    uniforms.uMouseEnabled.value = mouseInteraction ? 1 : 0;
+    uniforms.uMouseStrength.value = mouseStrength;
+    uniforms.uMouseRadius.value = mouseRadius;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    dpr,
-    paused,
-    colors,
+    colorsKey,
     speed,
     scale,
     turbulence,
@@ -375,7 +426,6 @@ const Ferrofluid = ({
     mouseInteraction,
     mouseStrength,
     mouseRadius,
-    mouseDampening,
   ]);
 
   return (

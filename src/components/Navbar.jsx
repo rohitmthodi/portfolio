@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CiMenuFries } from "react-icons/ci";
 import { HiXMark } from "react-icons/hi2";
@@ -22,33 +22,36 @@ const Navbar = () => {
           {/* Logo */}
           <img
             src="/logo.png"
-            alt="Logo"
+            alt="Rohit Portfolio Logo"
             className="w-10 h-10 md:w-12 md:h-12 object-contain"
           />
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8 font-subTitle">
             {navLinks.map((item) => (
-              <motion.div
+              <motion.a
                 key={item.title}
+                href={item.path}
                 whileHover={{
                   y: -3,
                   scale: 1.05,
                 }}
                 transition={{ duration: 0.2 }}
-                className="relative group cursor-pointer tracking-wider"
+                className="relative group cursor-pointer tracking-wider no-underline focus:outline-none focus:ring-1 focus:ring-cyan-500 rounded px-1"
               >
-                <p className="text-xs font-bold text-white transition-all duration-300 group-hover:text-[#c26118]">
+                <span className="text-xs font-bold text-white transition-all duration-300 group-hover:text-[#c26118]">
                   {item.title}
-                </p>
-              </motion.div>
+                </span>
+              </motion.a>
             ))}
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-white"
+            className="md:hidden text-white cursor-pointer focus:outline-none focus:ring-1 focus:ring-cyan-500 rounded p-1"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isOpen}
           >
             <motion.div
               animate={{
@@ -83,8 +86,9 @@ const Navbar = () => {
             className="fixed top-24 left-1/2 -translate-x-1/2 w-[95%] text-xs font-subTitle rounded-2xl bg-black/30 backdrop-blur-lg border border-cyan-400/10 shadow-[0_0_25px_rgba(0,229,255,0.08)] overflow-hidden z-40 md:hidden"
           >
             {navLinks.map((item, index) => (
-              <motion.p
+              <motion.a
                 key={item.title}
+                href={item.path}
                 initial={{
                   opacity: 0,
                   x: -30,
@@ -97,10 +101,10 @@ const Navbar = () => {
                   delay: index * 0.08,
                 }}
                 onClick={() => setIsOpen(false)}
-                className="cursor-pointer border-b border-cyan-400/10 px-6 py-4 text-white  transition-all duration-300 hover:bg-cyan-400/10 hover:text-[#8e2c2c]"
+                className="block cursor-pointer border-b border-cyan-400/10 px-6 py-4 text-white no-underline transition-all duration-300 hover:bg-cyan-400/10 hover:text-[#8e2c2c] focus:outline-none focus:bg-cyan-400/10 focus:text-[#8e2c2c]"
               >
                 {item.title}
-              </motion.p>
+              </motion.a>
             ))}
           </motion.div>
         )}

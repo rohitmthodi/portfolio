@@ -1,17 +1,23 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Ferrofluid from "../backgrounds/Ferrofluid";
 import { motion } from "framer-motion";
 import { Download } from "lucide-react";
 
 const Hero = () => {
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== "undefined") {
+      return window.matchMedia("(max-width: 767px)").matches;
+    }
+    return false;
+  });
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
+    const media = window.matchMedia("(max-width: 767px)");
+    const listener = (e) => {
+      setIsMobile(e.matches);
     };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    media.addEventListener("change", listener);
+    return () => media.removeEventListener("change", listener);
   }, []);
 
   const containerVariants = {
