@@ -79,7 +79,7 @@ const CustomCursor = () => {
         animate={{
           x: position.x,
           y: position.y,
-          scale: click ? 0.8 : hover ? 2.2 : 1,
+          scale: click ? 0.8 : hover ? 1.5 : 1,
           opacity: hover ? 0.8 : 1,
         }}
         transition={{
@@ -88,7 +88,7 @@ const CustomCursor = () => {
           damping: 28,
           mass: 0.5,
         }}
-        className="fixed top-0 left-0 z-9999 h-10 w-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#4F46E5] bg-red-500/10 pointer-events-none mix-blend-difference shadow-[0_0_10px_rgba(239,68,68,0.7),0_0_20px_rgba(239,68,68,0.4)]"
+        className="fixed top-0 left-0 z-9999 h-10 w-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#B91C1C] bg-[#ff0c0c1b] pointer-events-none mix-blend-difference shadow-[0_0_10px_rgba(239,68,68,0.7),0_0_20px_rgba(239,68,68,0.4)]"
       />
 
       {/* INNER DOT */}
@@ -103,7 +103,7 @@ const CustomCursor = () => {
           stiffness: 800,
           damping: 40,
         }}
-        className="fixed top-0 left-0 z-9999 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-red-500 pointer-events-none shadow-[0_0_20px_rgba(251,191,36,0.9)]"
+        className="fixed top-0 left-0 z-9999 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#B91C1C] pointer-events-none shadow-[0_0_20px_rgba(251,191,36,0.9)]"
       />
     </>
   );

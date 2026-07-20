@@ -36,14 +36,11 @@ const Navbar = () => {
                   scale: 1.05,
                 }}
                 transition={{ duration: 0.2 }}
-                className="relative group cursor-pointer"
+                className="relative group cursor-pointer tracking-wider"
               >
-                <p className="text-xs font-medium text-white transition-all duration-300 group-hover:text-[#00E5FF]">
+                <p className="text-xs font-bold text-white transition-all duration-300 group-hover:text-[#c26118]">
                   {item.title}
                 </p>
-
-                {/* Animated Underline */}
-                <span className="absolute -bottom-1 left-0 h-0.5 w-0 rounded-full bg-[#00E5FF] shadow-[0_0_12px_rgba(0,229,255,0.9)] transition-all duration-300 group-hover:w-full" />
               </motion.div>
             ))}
           </div>
@@ -100,7 +97,7 @@ const Navbar = () => {
                   delay: index * 0.08,
                 }}
                 onClick={() => setIsOpen(false)}
-                className="cursor-pointer border-b border-cyan-400/10 px-6 py-4 text-white  transition-all duration-300 hover:bg-cyan-400/10 hover:text-[#00E5FF]"
+                className="cursor-pointer border-b border-cyan-400/10 px-6 py-4 text-white  transition-all duration-300 hover:bg-cyan-400/10 hover:text-[#8e2c2c]"
               >
                 {item.title}
               </motion.p>
